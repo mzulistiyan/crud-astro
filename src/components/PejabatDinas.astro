@@ -1,0 +1,64 @@
+---
+// PostIndex.astro
+import { useState, useEffect } from 'react';
+import api from '../services/api';
+
+// Define your component's props (if any) here
+const fetchDataPosts = async () => {
+  const response = await api.get('/api/pejabat-dinas-puprs');
+  return response.data.data;
+};
+
+const posts = await fetchDataPosts();
+---
+
+<!-- Define your component's HTML here -->
+<table className="table table-bordered">
+  <thead className="bg-dark text-white">
+    <tr>
+      <th scope="col">Nama</th>
+      <th scope="col">Jabatan</th>
+      <th scope="col" style={{ width: "15%" }}>
+        Actions
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {posts.length > 0 ? (
+      posts.map((post, index) => (
+        <tr key={index}>
+          <td>{post.attributes.nama}</td>
+          <td>{post.attributes.jabatan}</td>
+          <td className="text-center">
+            <a
+              href={`/posts/edit/${post.id}`}
+              className="btn btn-sm btn-primary rounded-sm shadow border-0 me-2"
+            >
+              EDIT
+            </a>
+            <!-- Astro does not handle client-side interactivity out of the box. You might need to use a frontend framework here. -->
+            <button
+              type="button"
+              class="btn btn-sm btn-danger rounded-sm shadow border-0"
+              data-id={post.id}
+            >
+              DELETE
+            </button>
+          </td>
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td colSpan="4" className="text-center">
+          <div className="alert alert-danger mb-0">
+            Data Belum Tersedia!
+          </div>
+        </td>
+      </tr>
+    )}
+  </tbody>
+</table>
+
+<script>
+// Client-side interactivity can be added here using a frontend framework like React, Svelte, or Vue.
+</script>

@@ -1,0 +1,19 @@
+---
+// PostCreate.astro
+import PostForm from '../components/PostForm.jsx';
+// Scripts and other logic can be added here if needed
+---
+
+<!-- Your Astro component HTML -->
+<div className="container mt-5">
+  <div className="row">
+    <div className="col-md-12">
+      <div className="card border-0 rounded shadow">
+        <div className="card-body">
+          <!-- Use your React component here with client:load for interactivity -->
+          <PostForm client:load />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
