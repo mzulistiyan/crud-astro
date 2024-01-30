@@ -1,0 +1,35 @@
+---
+//import transitions effect
+import { ViewTransitions } from "astro:transitions";
+
+//import layout
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+//import form edit post
+import PostEdit from "../../../components/PejabatDinasEdit.jsx";
+
+//import service api
+import api from "../../../services/api";
+
+//get ID
+const { id } = Astro.params;
+
+//fetch detail data
+const { data } = await api.get(`/api/pejabat-dinas-puprs/${id}`);
+---
+
+<MainLayout>
+  <ViewTransitions />
+  <div class="container mb-5" style="margin-top: 5rem;">
+    <div class="row">
+      <div class="col-md-12">
+        <PostEdit
+          client:load
+          postID={data.data.id}
+          postTitle={data.data.attributes.nama}
+          postContent={data.data.attributes.jabatan}
+        />
+      </div>
+    </div>
+  </div>
+</MainLayout>
